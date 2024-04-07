@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TrailEffect
+    uniqueID: 2124985023
+    locked: 0

@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float speed = 30f;
+    public float speed = 35f;
+    public float acceleration = 0.5f;
+
+    AudioSource audioSource;
+
+    [SerializeField]
+    AudioClip hitSound; 
 
     private void Start()
     {
         GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        speed += acceleration * Time.deltaTime;
     }
 
     float hitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
@@ -24,6 +36,7 @@ public class Ball : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        PlaySound();
         if (collision.gameObject.name == "RacketLeft")
         {
             // Calculate hit Factor
@@ -52,5 +65,11 @@ public class Ball : MonoBehaviour
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
         }
+    }
+
+    void PlaySound()
+    {
+        audioSource.clip = hitSound;
+        audioSource.Play();
     }
 }
